@@ -46,7 +46,7 @@ const products: Product[] = [
     name: "Sala Santorini",
     type: "Salas",
     price: "Cotización a medida",
-    img: "/sala-santorini.jpg",
+    img: "/Sala-santorini.jpg",
     description:
       "Líneas orgánicas y máxima comodidad. Fabricada con espumas de alta densidad que garantizan confort prolongado sin deformarse; incluye 3 cojines decorativos.",
     puestos: "5 a 6 personas (Seccional L)",
