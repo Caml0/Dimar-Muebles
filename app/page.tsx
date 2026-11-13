@@ -4,8 +4,8 @@ import { About } from "@/components/about"
 import { Catalog } from "@/components/catalog"
 import { CustomWork } from "@/components/custom-work"
 import { Appointment } from "@/components/appointment"
-import { SiteFooter } from "@/components/site-footer"
 import { FAQ } from "@/components/faq"
+import { SiteFooter } from "@/components/site-footer"
 
 export default function Page() {
   return (
@@ -16,8 +16,8 @@ export default function Page() {
       <Catalog />
       <CustomWork />
       <Appointment />
+      <FAQ />
       <SiteFooter />
-      <FAQ/>
     </main>
   )
 }
