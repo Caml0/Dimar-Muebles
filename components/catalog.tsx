@@ -190,7 +190,7 @@ const products: Product[] = [
     name: "Comedor Playero",
     type: "Comedores",
     price: "Cotización a medida",
-    img: "/Comedor-Playero.jpg",
+    img: "/Playero-CM.jpg",
     description:
       "Diseñado para ser el lugar de encuentro en tu hogar, cenas y reuniones memorables.",
     puestos: "6 puestos",
