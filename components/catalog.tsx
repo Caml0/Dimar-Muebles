@@ -224,7 +224,7 @@ const products: Product[] = [
     // VARIANTES DEL COMEDOR MÓSCU (Cambia cada "img" por el nombre exacto de tu foto en public/)
     variants: [
       {
-        label: "Base Rectangular",
+        label: "4 puestos a rallas · Base Rectangular",
         img: "/Mosu-CM.jpg",
         puestos: "4 puestos",
         medidas: "Mesa: base rectangular · Altura estándar",
@@ -237,7 +237,7 @@ const products: Product[] = [
         medidas: "Mesa: base redonda · Altura estándar",
       },
       {
-        label: "4 puestos a rayas con butaco",
+        label: "4 puestos a rayas · con butaco",
         img: "/Butaca-CM.jpg",
         puestos: "4 puestos (sillas + butaco)",
         telas: "Tela a rayas antifluido o Pet Friendly",
