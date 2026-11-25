@@ -186,6 +186,18 @@ const products: Product[] = [
     madera: "Estructura reforzada en madera maciza seleccionada",
     medidas: "Fabricación a la medida de tu espacio",
   },
+  {
+    name: "Comedor Playero",
+    type: "Comedores",
+    price: "Cotización a medida",
+    img: "/Comedor-Playero.jpg",
+    description:
+      "Diseñado para ser el lugar de encuentro en tu hogar, cenas y reuniones memorables.",
+    puestos: "6 puestos",
+    telas: "Antifluido o Pet Friendly",
+    madera: "Estructura en madera de Roble seco inmunizado con comedor marmolizado",
+    medidas: "Mesa: base circular de 1.60m x 0.90m · Altura estándar",
+  },
 ]
 
 export function Catalog() {
