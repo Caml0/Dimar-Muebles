@@ -16,6 +16,17 @@ import {
 // Lista de categorías para los botones de filtro
 const categories = ["Todos", "Salas", "Comedores", "Camas", "Sofas"]
 
+// Estructura de cada variante opcional (solo pones los campos que cambian)
+interface ProductVariant {
+  label: string
+  img: string
+  description?: string
+  puestos?: string
+  telas?: string
+  madera?: string
+  medidas?: string
+}
+
 // Estructura de tipos de datos de cada producto
 interface Product {
   name: string
@@ -27,6 +38,7 @@ interface Product {
   telas: string
   madera: string
   medidas: string
+  variants?: ProductVariant[]
 }
 
 const products: Product[] = [
@@ -204,11 +216,28 @@ const products: Product[] = [
     price: "Cotización a medida",
     img: "/Mosu-CM.jpg",
     description:
-      "Creado con un diseño imperial e imponente, haciendo de tu hogar algo totalmente diferente.",
+      "Creado con un diseño imperial e imponente, haciendo de tu hogar algo totalmente diferente. Disponible en varias configuraciones de base y tapicería.",
     puestos: "4 puestos",
     telas: "Antifluido o Pet Friendly",
     madera: "Estructura en madera de Roble seco inmunizado con comedor marmolizado",
-    medidas: "Mesa: base circular de 1.60m x 0.90m · Altura estándar",
+    medidas: "Mesa: base rectangular de 1.60m x 0.90m · Altura estándar",
+    // VARIANTES DEL COMEDOR MÓSCU (Cambia cada "img" por el nombre exacto de tu foto en public/)
+    variants: [
+      {
+        label: "4 puestos a rayas · Base redonda",
+        img: "/Moscu-redondo.jpg",
+        puestos: "4 puestos",
+        telas: "Tela a rayas antifluido o Pet Friendly",
+        medidas: "Mesa: base redonda · Altura estándar",
+      },
+      {
+        label: "4 puestos a rayas con butaco",
+        img: "/Butaca-CM.jpg",
+        puestos: "4 puestos (sillas + butaco)",
+        telas: "Tela a rayas antifluido o Pet Friendly",
+        medidas: "Mesa rectangular con banca/butaco a medida",
+      },
+    ],
   },
   {
     name: "Comedor Princesa",
@@ -220,13 +249,19 @@ const products: Product[] = [
     puestos: "4 puestos",
     telas: "Antifluido o Pet Friendly",
     madera: "Estructura en madera de Roble seco inmunizado con comedor marmolizado",
-    medidas: "Mesa: base circular de 1.60m x 0.90m · Altura estándar",
+    medidas: "Mesa: base redonda de 1.60m x 0.90m · Altura estándar",
   },
 ]
 
 export function Catalog() {
   const [selectedCategory, setSelectedCategory] = useState("Todos")
   const [activeProduct, setActiveProduct] = useState<Product | null>(null)
+  const [activeVariantIndex, setActiveVariantIndex] = useState(0)
+
+  const handleOpenProduct = (product: Product) => {
+    setActiveProduct(product)
+    setActiveVariantIndex(0)
+  }
 
   const filteredProducts =
     selectedCategory === "Todos"
@@ -245,6 +280,19 @@ export function Catalog() {
       (p) => p.type.toLowerCase() === category.toLowerCase()
     ).length
   }
+
+  // Datos activos dentro del modal (si tiene variante seleccionada, usa sus datos)
+  const currentVariant = activeProduct?.variants?.[activeVariantIndex]
+  const displayImg = currentVariant?.img || activeProduct?.img || "/placeholder.svg"
+  const displayDescription =
+    currentVariant?.description || activeProduct?.description || ""
+  const displayPuestos = currentVariant?.puestos || activeProduct?.puestos || ""
+  const displayTelas = currentVariant?.telas || activeProduct?.telas || ""
+  const displayMadera = currentVariant?.madera || activeProduct?.madera || ""
+  const displayMedidas = currentVariant?.medidas || activeProduct?.medidas || ""
+  const whatsappProductLabel = currentVariant
+    ? `${activeProduct?.name} (${currentVariant.label})`
+    : activeProduct?.name || ""
 
   return (
     <section id="catalogo" className="relative bg-warm-texture">
@@ -304,7 +352,7 @@ export function Catalog() {
           {filteredProducts.map((product) => (
             <article
               key={product.name}
-              onClick={() => setActiveProduct(product)}
+              onClick={() => handleOpenProduct(product)}
               className="group cursor-pointer flex flex-col overflow-hidden rounded-3xl border border-border/80 bg-card shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/50 hover:shadow-2xl"
             >
               {/* Contenedor de imagen */}
@@ -323,9 +371,11 @@ export function Catalog() {
                   {product.type}
                 </span>
 
-                {/* Etiqueta derecha: Acción */}
+                {/* Etiqueta derecha: Acción o cantidad de diseños */}
                 <span className="absolute top-4 right-4 rounded-full bg-black/65 backdrop-blur-md px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white transition-colors group-hover:bg-accent">
-                  Ver ficha
+                  {product.variants && product.variants.length > 1
+                    ? `${product.variants.length} diseños`
+                    : "Ver ficha"}
                 </span>
 
                 {/* Etiqueta inferior: Capacidad rápida */}
@@ -382,14 +432,16 @@ export function Catalog() {
             <div className="relative w-full md:w-[52%] bg-[#F4F0E8] flex flex-col items-center justify-center p-4 sm:p-6 shrink-0 border-b md:border-b-0 md:border-r border-border/60">
               <div className="relative w-full h-64 sm:h-80 md:h-[400px]">
                 <Image
-                  src={activeProduct.img}
-                  alt={activeProduct.name}
+                  src={displayImg}
+                  alt={whatsappProductLabel}
                   fill
                   className="object-contain drop-shadow-md"
                 />
               </div>
               <span className="mt-3 text-[11px] font-medium uppercase tracking-widest text-muted-foreground">
-                Vista completa · Fabricación personalizada
+                {currentVariant
+                  ? currentVariant.label
+                  : "Vista completa · Fabricación personalizada"}
               </span>
             </div>
 
@@ -412,8 +464,36 @@ export function Catalog() {
                   {activeProduct.price}
                 </p>
 
+                {/* SELECTOR DE VARIANTES (Solo aparece si el mueble tiene variantes) */}
+                {activeProduct.variants && activeProduct.variants.length > 1 && (
+                  <div className="mt-5">
+                    <p className="text-[11px] font-bold uppercase tracking-wider text-primary mb-2.5">
+                      Elige un diseño ({activeProduct.variants.length} opciones):
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {activeProduct.variants.map((variant, idx) => {
+                        const isSelected = idx === activeVariantIndex
+                        return (
+                          <button
+                            key={variant.label}
+                            type="button"
+                            onClick={() => setActiveVariantIndex(idx)}
+                            className={`rounded-xl px-3 py-2 text-xs font-semibold transition-all border ${
+                              isSelected
+                                ? "bg-primary text-primary-foreground border-primary shadow-sm"
+                                : "bg-secondary/50 text-primary border-border hover:border-primary/50"
+                            }`}
+                          >
+                            {variant.label}
+                          </button>
+                        )
+                      })}
+                    </div>
+                  </div>
+                )}
+
                 <p className="mt-4 text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                  {activeProduct.description}
+                  {displayDescription}
                 </p>
 
                 {/* Cuadrícula de Especificaciones */}
@@ -425,7 +505,7 @@ export function Catalog() {
                         Capacidad / Tamaño
                       </p>
                       <p className="text-muted-foreground mt-0.5">
-                        {activeProduct.puestos}
+                        {displayPuestos}
                       </p>
                     </div>
                   </div>
@@ -437,7 +517,7 @@ export function Catalog() {
                         Telas disponibles
                       </p>
                       <p className="text-muted-foreground mt-0.5">
-                        {activeProduct.telas}
+                        {displayTelas}
                       </p>
                     </div>
                   </div>
@@ -449,7 +529,7 @@ export function Catalog() {
                         Estructura y madera
                       </p>
                       <p className="text-muted-foreground mt-0.5">
-                        {activeProduct.madera}
+                        {displayMadera}
                       </p>
                     </div>
                   </div>
@@ -461,7 +541,7 @@ export function Catalog() {
                         Medidas
                       </p>
                       <p className="text-muted-foreground mt-0.5">
-                        {activeProduct.medidas}
+                        {displayMedidas}
                       </p>
                     </div>
                   </div>
@@ -472,7 +552,7 @@ export function Catalog() {
               <div className="mt-6 pt-4 border-t border-border/60">
                 <a
                   href={`https://wa.me/${whatsappNumber}?text=Hola%20Dimar%20Muebles,%20me%20gustaría%20cotizar%20el%20diseño:%20${encodeURIComponent(
-                    activeProduct.name
+                    whatsappProductLabel
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
