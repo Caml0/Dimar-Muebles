@@ -204,7 +204,19 @@ const products: Product[] = [
     price: "Cotización a medida",
     img: "/Mosu-CM.jpg",
     description:
-      "Diseñado para ser el lugar de encuentro en tu hogar, cenas y reuniones memorables.",
+      "Creado con un diseño imperial e imponente, haciendo de tu hogar algo totalmente diferente.",
+    puestos: "4 puestos",
+    telas: "Antifluido o Pet Friendly",
+    madera: "Estructura en madera de Roble seco inmunizado con comedor marmolizado",
+    medidas: "Mesa: base circular de 1.60m x 0.90m · Altura estándar",
+  },
+  {
+    name: "Comedor Princesa",
+    type: "Comedores",
+    price: "Cotización a medida",
+    img: "/Princesa-CM.jpg",
+    description:
+      "La elegancia y la humildad es algo que se encuentra en el comedor Princesa.",
     puestos: "4 puestos",
     telas: "Antifluido o Pet Friendly",
     madera: "Estructura en madera de Roble seco inmunizado con comedor marmolizado",
