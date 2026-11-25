@@ -224,6 +224,12 @@ const products: Product[] = [
     // VARIANTES DEL COMEDOR MÓSCU (Cambia cada "img" por el nombre exacto de tu foto en public/)
     variants: [
       {
+        label: "Base Rectangular",
+        img: "/Mosu-CM.jpg",
+        puestos: "4 puestos",
+        medidas: "Mesa: base rectangular · Altura estándar",
+      },
+      {
         label: "4 puestos a rayas · Base redonda",
         img: "/Moscu-redondo.jpg",
         puestos: "4 puestos",
