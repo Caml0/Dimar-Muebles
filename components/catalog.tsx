@@ -198,6 +198,18 @@ const products: Product[] = [
     madera: "Estructura en madera de Roble seco inmunizado con comedor marmolizado",
     medidas: "Mesa: base circular de 1.60m x 0.90m · Altura estándar",
   },
+  {
+    name: "Comedor Móscu",
+    type: "Comedores",
+    price: "Cotización a medida",
+    img: "/Mosu-CM.jpg",
+    description:
+      "Diseñado para ser el lugar de encuentro en tu hogar, cenas y reuniones memorables.",
+    puestos: "4 puestos",
+    telas: "Antifluido o Pet Friendly",
+    madera: "Estructura en madera de Roble seco inmunizado con comedor marmolizado",
+    medidas: "Mesa: base circular de 1.60m x 0.90m · Altura estándar",
+  },
 ]
 
 export function Catalog() {
